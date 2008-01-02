@@ -14,6 +14,7 @@ Source0:	mISDNuser-%{snap}.tar.bz2
 Source1:	mISDN.tar.bz2
 Patch0:		mISDNuser-shared.diff
 Epoch:		1
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Modular ISDN (mISDN) is the new ISDN stack of the linux kernel
