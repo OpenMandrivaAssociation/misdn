@@ -6,12 +6,13 @@
 Summary:	Modular ISDN (mISDN) libraries
 Name:		misdn
 Version:	3.4
-Release:	%mkrel 0.%{snap}.2
+Release:	%mkrel 0.%{snap}.3
 Group:		System/Libraries
 License:	GPL
 URL:		http://isdn.jolly.de/
 Source0:	mISDNuser-%{snap}.tar.bz2
 Source1:	mISDN.tar.bz2
+# Build shared libraries, use optflags:
 Patch0:		mISDNuser-shared.diff
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
@@ -66,7 +67,7 @@ done
     
 %build
 
-%make
+%make LDFLAGS="%ldflags"
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -94,7 +95,7 @@ install -m0755 tenovis/lib/libtenovis.so.%{major} %{buildroot}%{_libdir}/
 ln -s libisdnnet.so.%{major} %{buildroot}%{_libdir}/libisdnnet.so
 ln -s libmISDN.so.%{major} %{buildroot}%{_libdir}/libmISDN.so
 ln -s libsuppserv.so.%{major} %{buildroot}%{_libdir}/libsuppserv.so
-ln -s lib/libtenovis.so.%{major} %{buildroot}%{_libdir}/libtenovis.so
+ln -s libtenovis.so.%{major} %{buildroot}%{_libdir}/libtenovis.so
 
 # install headers
 install -m0644 i4lnet/*.h %{buildroot}%{_includedir}/mISDNuser/
