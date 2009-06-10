@@ -1,25 +1,26 @@
-%define	snap 20090107
+%define name    misdn
+%define version 1.5
+%define libname %mklibname %{name}
+%define snap    20090602
+%define release %mkrel %{snap}.1
+%define	epoch	2
 
-%define libname	%mklibname misdn
-
-Summary:	Modular ISDN (mISDN) libraries
-Name:		misdn
-Version:	1.3
-Release:	%mkrel 0.%{snap}.1
+Summary:	Modular ISDN (mISDN) version 2
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
 Group:		System/Libraries
 License:	GPL
 URL:		http://www.misdn.org/index.php/Main_Page
 Source0:	http://www.linux-call-router.de/download/lcr-%{version}/mISDNuser_%{snap}.tar.gz
-Epoch:		1
-Provides:	mISDN, mISDNuser
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
-Modular ISDN (mISDN) is the new ISDN stack of the linux kernel
-version 2.6.
-
-This package provides shared and static libraries as well as 
-various header files.
+mISDN supports a complete BRI and PRI ETSI compliant DSS1 protocol stack for
+the TE mode and for the NT mode. It is the successor of the "old" isdn4linux
+subsystem, in particular its "HiSax" family of drivers. It has growing
+support for the interface cards of hisax and additionally supports
+the cool HFCmulti chip based cards
 
 %package -n	%{libname}
 Summary:	Modular ISDN (mISDN) libraries
@@ -60,12 +61,10 @@ for i in `find . -type d -name CVS` `find . -type d -name .svn` `find . -type f 
 	if [ -e "$i" ]; then rm -r $i; fi >&/dev/null
 done
 
-#sed 's/CFLAGS:= -g -Wall/CFLAGS:= '"$RPM_OPT_FLAGS"' -g -Wall/' -i Makefile
-
 %build
-
-%make INSTALL_PREFIX=%{buildroot} INSTALL_LIBDIR=%{_libdir} 
-#LDFLAGS="%ldflags"
+CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS
+LDFLAGS="${LDFLAGS}"  ; export LDFLAGS
+%make INSTALL_PREFIX=%{buildroot} INSTALL_LIBDIR=%{_libdir}
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -77,7 +76,6 @@ done
 
 %files
 %defattr(-,root,root)
-%doc COPYING.LIB LICENSE
 %{_bindir}/*
 
 %files -n %{libname}
