@@ -1,9 +1,11 @@
-%define name    misdn
+%define name    misdn2
 %define version 1.5
 %define libname %mklibname %{name}
 %define snap    20090602
 %define release %mkrel %{snap}.1
 %define	epoch	2
+%define	name_old	misdn
+%define	libname_old	%mklibname %{name_old}
 
 Summary:	Modular ISDN (mISDN) version 2
 Name:		%{name}
@@ -13,7 +15,9 @@ Group:		System/Libraries
 License:	GPL
 URL:		http://www.misdn.org/index.php/Main_Page
 Source0:	http://www.linux-call-router.de/download/lcr-%{version}/mISDNuser_%{snap}.tar.gz
+Provides:	%{name_old} = %{epoch}:%{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+Epoch:		%{epoch}
 
 %description
 mISDN supports a complete BRI and PRI ETSI compliant DSS1 protocol stack for
@@ -26,6 +30,7 @@ the cool HFCmulti chip based cards
 Summary:	Modular ISDN (mISDN) libraries
 Group:		System/Libraries
 Epoch:		%{epoch}
+Provides:	%{libname_old} = %{epoch}:%{version}-%{release}
 
 %description -n	%{libname}
 Modular ISDN (mISDN) is the new ISDN stack of the linux kernel
@@ -38,6 +43,9 @@ Summary:	Static library and header files for the mISDN libraries
 Group:		Development/C
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	lib%{name}-devel = %{epoch}:%{version}-%{release}
+Provides:	%{libname_old}-devel = %{epoch}:%{version}-%{release}
+Provides:	%{name_old}-devel = %{epoch}:%{version}-%{release}
+Provides:	lib%{name_old}-devel = %{epoch}:%{version}-%{release}
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Epoch:		%{epoch}
 
