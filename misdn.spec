@@ -1,9 +1,13 @@
-%define name    misdn
+%define name    misdn2
 %define version 1.5
-%define libname %mklibname %{name}
+%define	epoch	2
+%define libname %mklibname misdn %{epoch}
 %define snap    20090602
 %define release %mkrel %{snap}.1
-%define	epoch	2
+
+%define build_qmisdnwatch 0
+%{?_without_qmisdnwatc:	%global build_qmisdnwatch 0}
+%{?_with_qmisdnwatch:	%global build_qmisdnwatch 1}
 
 Summary:	Modular ISDN (mISDN) version 2
 Name:		%{name}
@@ -49,6 +53,19 @@ version 2.6.
 This package provides shared and static libraries and header
 files.
 
+%if %{build_qmisdnwatch}
+%package -n	qmisdnwatch
+Summary:	Modular ISDN (mISDN) watch tool
+Group:		System/Configuration/Networking 
+Epoch:		1
+Requires:	qt4, misdn = 2:
+BuildRequires:	qt4-devel
+
+%description -n	qmisdnwatch
+This tool is combining mISDNuser cmdline tools in unified Qt4 GUI 
+and it monitoring D/B-Channel state with colored bullets.
+%endif
+
 %prep
 
 %setup -q -n mISDNuser
@@ -67,10 +84,23 @@ CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS
 LDFLAGS="${LDFLAGS}"  ; export LDFLAGS
 %make INSTALL_PREFIX=%{buildroot} INSTALL_LIBDIR=%{_libdir}
 
+%if %{build_qmisdnwatch}
+pushd guitools/qmisdnwatch
+	qmake
+	%make
+popd
+%endif
+
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %makeinstall INSTALL_PREFIX=%{buildroot} INSTALL_LIBDIR=%{_libdir}
+
+%if %{build_qmisdnwatch}
+cp guitools/qmisdnwatch/qmisdnwatch %{buildroot}/%{_bindir}/
+install -d %{buildroot}/usr/share/icons/qmisdnwatch
+install guitools/qmisdnwatch/res/*.png %{buildroot}/usr/share/icons/qmisdnwatch
+%endif
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -87,4 +117,11 @@ LDFLAGS="${LDFLAGS}"  ; export LDFLAGS
 %defattr(-,root,root)
 %{_includedir}/mISDNuser/*.*
 %{_libdir}/*.a
+
+%if %{build_qmisdnwatch}
+%files -n qmisdnwatch
+%defattr(-,root,root)
+%{_bindir}/qmisdnwatch
+%{_iconsdir}/qmisdnwatch/*.png
+%endif
 
