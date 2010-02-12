@@ -3,7 +3,7 @@
 %define	epoch	2
 %define libname %mklibname misdn %{epoch}
 %define snap    20090602
-%define release %mkrel %{snap}.1
+%define release %mkrel %{snap}.2
 
 %define build_qmisdnwatch 0
 %{?_without_qmisdnwatc:	%global build_qmisdnwatch 0}
@@ -18,6 +18,7 @@ Group:		System/Libraries
 License:	GPL
 URL:		http://www.misdn.org/index.php/Main_Page
 Source0:	http://www.linux-call-router.de/download/lcr-%{version}/mISDNuser_%{snap}.tar.gz
+Patch0:		misdn-suppserv-fac-compile-fix.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -69,6 +70,7 @@ and it monitoring D/B-Channel state with colored bullets.
 %prep
 
 %setup -q -n mISDNuser
+%patch0 -p0 -b comp
 
 # fix strange perms
 find . -type f -exec chmod 644 {} \;
@@ -78,6 +80,8 @@ find . -type d -exec chmod 755 {} \;
 for i in `find . -type d -name CVS` `find . -type d -name .svn` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
 	if [ -e "$i" ]; then rm -r $i; fi >&/dev/null
 done
+
+sed 's/SUBDIRS := lib bridge tools example l1oip/& suppserv/' -i Makefile
 
 %build
 CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS
