@@ -1,25 +1,16 @@
-%define name    misdn2
-%define version 1.5
-%define	epoch	2
 %define libname %mklibname misdn %{epoch}
-%define snap    20090602
-%define release %mkrel %{snap}.3
-
-%define build_qmisdnwatch 0
-%{?_without_qmisdnwatc:	%global build_qmisdnwatch 0}
-%{?_with_qmisdnwatch:	%global build_qmisdnwatch 1}
 
 Summary:	Modular ISDN (mISDN) version 2
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-Epoch:		%{epoch}
+Name:		misdn
+Version:	2
+Release:	20110416.1
+Epoch:		2
 Group:		System/Libraries
 License:	GPL
 URL:		http://www.misdn.org/index.php/Main_Page
-Source0:	http://www.linux-call-router.de/download/lcr-%{version}/mISDNuser_%{snap}.tar.gz
-Patch0:		misdn-suppserv-fac-compile-fix.patch
+Source0:	http://www.colognechip.com/download/mISDN/socket/mISDNuser.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+
 
 %description
 mISDN supports a complete BRI and PRI ETSI compliant DSS1 protocol stack for
@@ -54,78 +45,36 @@ version 2.6.
 This package provides shared and static libraries and header
 files.
 
-%if %{build_qmisdnwatch}
-%package -n	qmisdnwatch
-Summary:	Modular ISDN (mISDN) watch tool
-Group:		System/Configuration/Networking 
-Epoch:		1
-Requires:	qt4, misdn = 2:
-BuildRequires:	qt4-devel
-
-%description -n	qmisdnwatch
-This tool is combining mISDNuser cmdline tools in unified Qt4 GUI 
-and it monitoring D/B-Channel state with colored bullets.
-%endif
-
 %prep
 
 %setup -q -n mISDNuser
-%patch0 -p0 -b comp
-
-# fix strange perms
-find . -type f -exec chmod 644 {} \;
-find . -type d -exec chmod 755 {} \;
 
 # cvs cleanup
 for i in `find . -type d -name CVS` `find . -type d -name .svn` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
 	if [ -e "$i" ]; then rm -r $i; fi >&/dev/null
 done
 
-sed 's/SUBDIRS := lib bridge tools example l1oip/& suppserv/' -i Makefile
-
 %build
-CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS
-LDFLAGS="${LDFLAGS}"  ; export LDFLAGS
-%make INSTALL_PREFIX=%{buildroot} INSTALL_LIBDIR=%{_libdir}
 
-%if %{build_qmisdnwatch}
-pushd guitools/qmisdnwatch
-	qmake
-	%make
-popd
-%endif
+%configure2_5x
+%make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %makeinstall INSTALL_PREFIX=%{buildroot} INSTALL_LIBDIR=%{_libdir}
-
-%if %{build_qmisdnwatch}
-cp guitools/qmisdnwatch/qmisdnwatch %{buildroot}/%{_bindir}/
-install -d %{buildroot}/usr/share/icons/qmisdnwatch
-install guitools/qmisdnwatch/res/*.png %{buildroot}/usr/share/icons/qmisdnwatch
-%endif
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
 %{_bindir}/*
+%{_sbindir}/*
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so
+%{_libdir}/*.so*
 
 %files -n %{libname}-devel
 %defattr(-,root,root)
-%{_includedir}/mISDNuser/*.*
+%{_includedir}/mISDN/*.*
+%{_libdir}/*.la
 %{_libdir}/*.a
-
-%if %{build_qmisdnwatch}
-%files -n qmisdnwatch
-%defattr(-,root,root)
-%{_bindir}/qmisdnwatch
-%{_iconsdir}/qmisdnwatch/*.png
-%endif
 
