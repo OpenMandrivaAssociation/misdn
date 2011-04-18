@@ -3,13 +3,16 @@
 Summary:	Modular ISDN (mISDN) version 2
 Name:		misdn
 Version:	2
-Release:	20110416.2
+Release:	20110416.3
 Epoch:		2
 Group:		System/Libraries
 License:	GPL
 URL:		http://www.misdn.org/index.php/Main_Page
 Source0:	http://www.colognechip.com/download/mISDN/socket/mISDNuser.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+Obsoletes:	misdn2
+Obsoletes:	mISDNuser
+Obsoletes:	mISDN2user
 Provides:	misdn2
 Provides:	mISDNuser
 Provides:	mISDN2user
@@ -25,6 +28,11 @@ the cool HFCmulti chip based cards
 Summary:	Modular ISDN (mISDN) libraries
 Group:		System/Libraries
 Epoch:		%{epoch}
+Obsoletes:	%{_lib}mISDN
+Obsoletes:	%{_lib}mISDN2user
+Obsoletes:	%{_lib}misdn
+Obsoletes:	%{_lib}misdn0
+Obsoletes:	%{_lib}misdn2
 Provides:	%{_lib}mISDN
 Provides:	%{_lib}mISDN2user
 Provides:	%{_lib}misdn
@@ -44,6 +52,11 @@ Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	lib%{name}-devel = %{epoch}:%{version}-%{release}
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Epoch:		%{epoch}
+Obsoletes:	%{_lib}mISDN-devel
+Obsoletes:	%{_lib}mISDN2user-devel
+Obsoletes:	%{_lib}misdn-devel
+Obsoletes:	%{_lib}misdn0-devel
+Obsoletes:	%{_lib}misdn2-devel
 Provides:	%{_lib}mISDN-devel
 Provides:	%{_lib}mISDN2user-devel
 Provides:	%{_lib}misdn-devel
