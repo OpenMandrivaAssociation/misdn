@@ -3,7 +3,7 @@
 Summary:	Modular ISDN (mISDN) version 2
 Name:		misdn
 Version:	2
-Release:	20110421.1
+Release:	20110421.2
 Epoch:		2
 Group:		System/Libraries
 License:	GPL
@@ -32,12 +32,10 @@ Obsoletes:	%{_lib}mISDN
 Obsoletes:	%{_lib}mISDN2user
 Obsoletes:	%{_lib}misdn
 Obsoletes:	%{_lib}misdn0
-Obsoletes:	%{_lib}misdn2
 Provides:	%{_lib}mISDN
 Provides:	%{_lib}mISDN2user
 Provides:	%{_lib}misdn
 Provides:	%{_lib}misdn0
-Provides:	%{_lib}misdn2
 
 %description -n	%{libname}
 Modular ISDN (mISDN) is the new ISDN stack of the linux kernel
@@ -56,12 +54,10 @@ Obsoletes:	%{_lib}mISDN-devel
 Obsoletes:	%{_lib}mISDN2user-devel
 Obsoletes:	%{_lib}misdn-devel
 Obsoletes:	%{_lib}misdn0-devel
-Obsoletes:	%{_lib}misdn2-devel
 Provides:	%{_lib}mISDN-devel
 Provides:	%{_lib}mISDN2user-devel
 Provides:	%{_lib}misdn-devel
 Provides:	%{_lib}misdn0-devel
-Provides:	%{_lib}misdn2-devel
 
 %description -n	%{libname}-devel
 Modular ISDN (mISDN) is the new ISDN stack of the linux kernel
