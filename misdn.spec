@@ -9,7 +9,6 @@ Group:		System/Libraries
 License:	GPL
 URL:		http://www.misdn.org/index.php/Main_Page
 Source0:	http://www.colognechip.com/download/mISDN/socket/mISDNuser.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 Obsoletes:	misdn2
 Obsoletes:	mISDNuser
 Obsoletes:	mISDN2user
@@ -91,31 +90,19 @@ done
 %make
 
 %install
-
-rm -rf %{buildroot}
 %makeinstall INSTALL_PREFIX=%{buildroot} INSTALL_LIBDIR=%{_libdir}
 
-%clean
-
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %{_bindir}/misdn*
 %{_bindir}/l1oipctrl
 %{_sbindir}/*
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so*
 
 %files -n %{libname}-devel
-%defattr(-,root,root)
 %{_includedir}/mISDN/*.*
-%{_libdir}/*.la
 %{_libdir}/*.a
 
 %files gui
-%defattr(-,root,root)
 %{_bindir}/qmisdnwatch
-
