@@ -3,7 +3,7 @@
 Summary:	Modular ISDN (mISDN) version 2
 Name:		misdn
 Version:	2
-Release:	20110421.2
+Release:	20110421.3
 Epoch:		2
 Group:		System/Libraries
 License:	GPL
