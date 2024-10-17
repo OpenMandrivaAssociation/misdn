@@ -7,7 +7,7 @@ Release:	20110421.3
 Epoch:		2
 Group:		System/Libraries
 License:	GPL
-URL:		http://www.misdn.org/index.php/Main_Page
+URL:		https://www.misdn.org/index.php/Main_Page
 Source0:	http://www.colognechip.com/download/mISDN/socket/mISDNuser.tar.bz2
 Obsoletes:	misdn2
 Obsoletes:	mISDNuser
