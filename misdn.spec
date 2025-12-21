@@ -69,6 +69,11 @@ files.
 License:	GPLv2
 Summary:	Qt application to watch the status of mISDN cards
 Group:		Monitoring
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	libqt4-devel
 
 %description gui
